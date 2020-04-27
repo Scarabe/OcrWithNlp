@@ -20,12 +20,14 @@ public class ReceiveDataController {
 
     @RequestMapping(value = "/ocrfile", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> insertNewBankSlip(@RequestParam final String teste) throws TesseractException {
-        String file = "c:/RG.jpg";
+    public ResponseEntity<String> insertNewBankSlip(@RequestParam final String language) throws TesseractException {
+        String file = "/teste.png";
 
         Tesseract tesseract = new Tesseract();
-        tesseract.setDatapath("c:/");
-        tesseract.setLanguage("por");
+        tesseract.setDatapath("/");
+        tesseract.setLanguage(language);
+        tesseract.setTessVariable("user_defined_dpi", "300");
+
         String text = tesseract.doOCR(new File(file));
 
         return ResponseEntity.status(HttpStatus.OK).body(text);
